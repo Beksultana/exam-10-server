@@ -18,6 +18,25 @@ const createRouter = connection => {
             res.send(result)
         })
     });
+    router.post('/', (req,res) => {
+        const comment = req.body;
+        connection.query('INSERT INTO `comments` (`author`, `comment`, `news_id`) VALUES (?,?,?)',
+            [comment.title, comment.comment, comment.news_id],
+            (err , result) => {
+                if (err) {
+                    res.status(500).send({error: 'comments error'})
+                }
+                res.send({message: 'OK'});
+            });
+    });
+    router.delete('/:id', (req,res) => {
+        connection.query('DELETE FROM `comments` WHERE `id` = ?', req.params.id, (err, results) => {
+            if (err) {
+                res.status(500).send({error: 'Database  error'})
+            }
+            res.send(results[0])
+        })
+    });
     return router;
 };
 
