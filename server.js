@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql');
 const news = require('./app/news');
+const comments = require('./app/comments');
 
 const app = express();
 app.use(express.json());
@@ -17,6 +18,7 @@ const connection = mysql.createConnection({
 });
 
 app.use('/news', news(connection));
+app.use('/comments', comments(connection));
 
 connection.connect(error => {
     if (error) {
