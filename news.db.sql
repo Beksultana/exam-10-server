@@ -6,6 +6,7 @@ CREATE TABLE `news` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(255) NOT NULL,
   `connect_news` TEXT NOT NULL,
+  `image` VARCHAR(100) NULL,
   `date` DATETIME NULL,
   PRIMARY KEY (`id`));
 
