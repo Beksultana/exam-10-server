@@ -25,7 +25,14 @@ const createRouter = connection => {
             res.send(result)
         })
     });
-
+    router.get('/:id', (req, res) => {
+        connection.query('SELECT * FROM `news` WHERE `id` = ? ',req.params.id, (error, result) => {
+            if (error) {
+                res.status(500).send({error: 'Database error'})
+            }
+            res.send(result)
+        })
+    });
     router.post('/', upload.single('image'), (req,res) => {
         const news = req.body;
         if (req.file) {
@@ -40,6 +47,14 @@ const createRouter = connection => {
                 }
                 res.send({message: 'OK'});
             });
+    });
+    router.delete('/:id', (req,res) => {
+        connection.query('DELETE FROM `news` WHERE `id` = ?', req.params.id, (err, results) => {
+            if (err) {
+                res.status(500).send({error: 'Database  error'})
+            }
+            res.send(results[0])
+        })
     });
     return router;
 };
